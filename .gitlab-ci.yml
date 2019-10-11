@@ -22,7 +22,7 @@ before_script:
   - export GCP_CLUSTER="$GCP_DEV_CLUSTER"
 
   # This is our GCR (private) image repo for the current HM container
-  - export IMAGE_GCR_HYPERMODEL="gcr.io/hyper-model-ops/hypermodel/$CI_COMMIT_REF_SLUG"
+  - export IMAGE_GCR_HYPERMODEL="gcr.io/hyper-model-ops/hyper-model"
 
   # These are our release / public containers
   - export IMAGE_DOCKERHUB_HYPERMODEL_BASE="growingdata/hypermodel-base"
