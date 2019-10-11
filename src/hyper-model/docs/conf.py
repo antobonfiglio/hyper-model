@@ -26,7 +26,7 @@ version = '0.1.75'
 
 # The full version, including alpha/beta/rc tags
 release = '0.1.75'
-
+master_doc = 'index'
 
 # -- General configuration ---------------------------------------------------
 
