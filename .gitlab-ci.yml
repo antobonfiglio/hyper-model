@@ -22,7 +22,7 @@ before_script:
   - export GCP_CLUSTER="$GCP_DEV_CLUSTER"
 
   # This is our GCR (private) image repo for the current HM container
-  - export IMAGE_GCR_HYPERMODEL="gcr.io/hyper-model-ops/hyper-model"
+  - export IMAGE_GCR_HYPERMODEL="gcr.io/hyper-model-ops/hypermodel"
 
   # These are our release / public containers
   - export IMAGE_DOCKERHUB_HYPERMODEL_BASE="growingdata/hypermodel-base"
@@ -35,9 +35,6 @@ before_script:
   - gcloud config set project $GCR_PROJECT
   - gcloud auth activate-service-account --key-file ./gcr-container-writer.json
   - gcloud auth configure-docker
-
-  # Login to DockerHub
-  - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD docker.io
 
   - VERSION=$(cat ./version.txt)
 
@@ -64,8 +61,8 @@ build-image-hyper-model:
     - build-docs
   script:
     - echo "Building..."
-    - docker build -t $IMAGE_GCR_HYPERMODEL:$CI_COMMIT_SHA -f ./infra/docker/hypermodel.Dockerfile ./src/hyper-model
-    - docker push $IMAGE_GCR_HYPERMODEL:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHA
+    - docker build -t $IMAGE_GCR_HYPERMODEL:$CI_COMMIT_REF_SLUG -f ./infra/docker/hypermodel.Dockerfile ./src/hyper-model
+    - docker push $IMAGE_GCR_HYPERMODEL:$CI_COMMIT_REF_SLUG
 
 ###############################################################
 ###  RELEASE
