@@ -75,14 +75,15 @@ push-dockerhub-app:
   # only:
   #   - release/*
   script:
-    - docker pull $IMAGE_HM_APP
-    - docker tag $IMAGE_HM_APP $IMAGE_HM_APP_DOCKERHUB
-    - docker tag $IMAGE_HM_APP_DOCKERHUB $IMAGE_HM_APP_DOCKERHUB:$VERSION
-
+    # Login to dockerhub
     - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD docker.io
-
-    - docker push $IMAGE_HM_APP_DOCKERHUB
-    - docker push $IMAGE_HM_APP_DOCKERHUB:$VERSION
+    # Pull the image I built during  `build-image-hyper-model` and re-tag it
+    - docker pull $IMAGE_GCR_HYPERMODEL:$CI_COMMIT_REF_SLUG
+    - docker tag $IMAGE_GCR_HYPERMODEL:$CI_COMMIT_REF_SLUG $IMAGE_DOCKERHUB_HYPERMODEL
+    - docker tag $IMAGE_GCR_HYPERMODEL:$CI_COMMIT_REF_SLUG $IMAGE_DOCKERHUB_HYPERMODEL:$VERSION
+    # Push my images, both as a version and as the latest
+    - docker push $IMAGE_DOCKERHUB_HYPERMODEL
+    - docker push $IMAGE_DOCKERHUB_HYPERMODEL:$VERSION
 
 push-pip:
   stage: release
@@ -93,9 +94,7 @@ push-pip:
   #   - release/*
   script:
     # Update HyperModel since we make lots of changes to it
-    - cd ./src/hyper-model
-    - pip install -e .
-    - cd ../
+    - pip install -e ./src/hyper-model
     - python publish_pip.py
 
 #######################################
