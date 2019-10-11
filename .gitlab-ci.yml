@@ -52,7 +52,7 @@ build-docs:
     # Make sure that we install our package first
     - pip install -e ./src/hyper-model
     # Make the documentation
-    - cd src/hyper-model/doc
+    - cd src/hyper-model/docs
     - make html
 
 #######################################
