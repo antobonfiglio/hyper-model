@@ -64,7 +64,7 @@ build-image-hyper-model:
     - build-docs
   script:
     - echo "Building..."
-    - docker build -t $IMAGE_GCR_HYPERMODEL:$CI_COMMIT_SHA -f ./infra/docker/hypermodel.Dockerfile ./src/
+    - docker build -t $IMAGE_GCR_HYPERMODEL:$CI_COMMIT_SHA -f ./infra/docker/hypermodel.Dockerfile ./src/hyper-model
     - docker push $IMAGE_GCR_HYPERMODEL:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHA
 
 ###############################################################
