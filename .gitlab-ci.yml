@@ -68,15 +68,15 @@ build-image-hyper-model:
     - docker push $IMAGE_GCR_HYPERMODEL:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHA
 
 ###############################################################
-###  OPEN_SOURCE
+###  RELEASE
 ###############################################################
 push-dockerhub-app:
   stage: release
   dependencies:
     - build-image-hyper-model
   when: manual
-  only:
-    - release/*
+  # only:
+  #   - release/*
   script:
     - docker pull $IMAGE_HM_APP
     - docker tag $IMAGE_HM_APP $IMAGE_HM_APP_DOCKERHUB
@@ -92,8 +92,8 @@ push-pip:
   dependencies:
     - build-image-hyper-model
   when: manual
-  only:
-    - release/*
+  # only:
+  #   - release/*
   script:
     # Update HyperModel since we make lots of changes to it
     - cd ./src/hyper-model
@@ -105,17 +105,17 @@ push-pip:
 ####  INFRA
 #######################################
 image-hypermodel-base:
-  stage: infra
+  stage: release
   when: manual
-  # only:
-  #   - release/*
+  only:
+    - release/*
   script:
     - echo "Building..."
     - docker build -t $IMAGE_DOCKERHUB_HYPERMODEL_BASE:alpine-$VERSION -f ./infra/docker/hypermodel-base.Dockerfile ./infra/docker
     - docker push $IMAGE_DOCKERHUB_HYPERMODEL_BASE:alpine-$VERSION
 
 image-hypermodel-cicd-gitlab:
-  stage: infra
+  stage: release
   when: manual
   # only:
   #   - release/*
