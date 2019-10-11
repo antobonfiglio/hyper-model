@@ -65,7 +65,7 @@ build-image-hyper-model:
   script:
     - echo "Building..."
     - docker build -t $IMAGE_GCR_HYPERMODEL:$CI_COMMIT_SHA -f ./infra/docker/hypermodel.Dockerfile ./src/
-    # - docker push $IMAGE_GCR_HYPERMODEL:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHA
+    - docker push $IMAGE_GCR_HYPERMODEL:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHA
 
 ###############################################################
 ###  OPEN_SOURCE
@@ -73,7 +73,7 @@ build-image-hyper-model:
 push-dockerhub-app:
   stage: release
   dependencies:
-    - build-app-image
+    - build-image-hyper-model
   when: manual
   only:
     - release/*
@@ -90,7 +90,7 @@ push-dockerhub-app:
 push-pip:
   stage: release
   dependencies:
-    - build-app-image
+    - build-image-hyper-model
   when: manual
   only:
     - release/*
