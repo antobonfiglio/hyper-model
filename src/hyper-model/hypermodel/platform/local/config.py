@@ -70,4 +70,5 @@ class LocalConfig():
 # filename resolution as in the future, we may 
 # want to create new files for different calculations
 def get_default_sql_lite_file_name():
-    return "C:\\Amit\\hypermodel\\hyper-model\\src\\hyper-model\\hypermodel\\platform\\local\\titanic_db.dat"
+    #return "C:\\Amit\\hypermodel\\hyper-model\\src\\hyper-model\\hypermodel\\platform\\local\\titanic_db.dat"
+    return  os.environ.get("SQL_LITE_LOCATION")

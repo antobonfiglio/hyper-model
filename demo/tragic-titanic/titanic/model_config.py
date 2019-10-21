@@ -28,14 +28,7 @@ def titanic_model_container():
     logging.info(f"Entering model_config:titanic_model_container")
 
     titanic_numerical_features: List[str] = NUMERICAL_FEATURES
-
     titanic_categorical_features: List[str] = CATEGORICAL_FEATURES
-
-
-
-
-
-
     all_features: List[str] = titanic_numerical_features + titanic_categorical_features
 
     target_column: str = "Survived"

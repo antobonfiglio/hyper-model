@@ -71,14 +71,13 @@ class SqliteDataWarehouse(ABC):
 
     def dataframe_from_query(self, query: str) -> pd.DataFrame:
         logging.info(f"SqliteDataWarehouse.dataframe_from_query")
-        dbLocation=config.default_sql_lite_db_file
+        dbLocation=self.config.default_sql_lite_db_file
         connection =  sqlite3.connect(dbLocation)
         retDataFrame = pd.read_sql_query(query, connection)
         connection.close()
         return retDataFrame
 
     def get_table_columns(self,dbLocation: str, query: str)->List[SqlColumn]: 
-        dbLocation=self.config.default_sql_lite_db_file
         connection =  sqlite3.connect(dbLocation)
         # confining the query to return minimum rows 
         # in order to maintain perfromance
@@ -140,7 +139,7 @@ class SqliteDataWarehouse(ABC):
         # print(tbl.to_sql())
         # return tbl
         #get reference to DB 
-        columns=get_table_columns(dbLocation,"select * from "+tableName+" limit 1")
+        columns=self.get_table_columns(dbLocation,"select * from "+tableName+" limit 1")
         #as SQL lite does not have a dataset ID and table ID using the table name for that
         retTable=SqlTable(tableName,tableName,columns)
         return retTable
@@ -168,7 +167,7 @@ def unit_test():
 
 
 def test_dummy():
-    dbNameLoc="titanic_db.dat"
+    dbNameLoc="titanic_db.db"
     tableName="titanic_train_table"
     conn = sqlite3.connect(dbNameLoc)
 
@@ -182,7 +181,7 @@ def test_dummy():
 def test_import_csv():
     config = LocalConfig()
     sqlDW=SqliteDataWarehouse(config)
-    dbNameLoc="titanic_db.dat"
+    dbNameLoc="titanic_db.db"
     tableName="titanic_train_table"
     ret=sqlDW.import_csv("C:\\Amit\\hypermodel\\hyper-model\\demo\\tragic-titanic\\data\\titanic_train.csv", dbNameLoc,tableName )
     
@@ -198,7 +197,7 @@ def test_import_csv():
 def test_dataframe_from_table():
     config = LocalConfig()
     sqlDW=SqliteDataWarehouse(config)
-    dbNameLoc="titanic_db.dat"
+    dbNameLoc="titanic_db.db"
     tableName="titanic_train_table"
     retDataFrame=sqlDW.dataframe_from_table( dbNameLoc,tableName )
     

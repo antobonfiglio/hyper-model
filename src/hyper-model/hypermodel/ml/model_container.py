@@ -51,6 +51,7 @@ class ModelContainer:
 
     def analyze_distributions(self, data_frame: pd.DataFrame):
         logging.info(f"ModelContainer {self.name}: analyze_distributions")
+
         self.feature_uniques = get_unique_feature_values(
             data_frame, self.features_categorical
         )
