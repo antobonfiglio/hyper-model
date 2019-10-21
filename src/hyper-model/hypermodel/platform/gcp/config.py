@@ -1,9 +1,10 @@
 import os
 import typing
 from typing import List, Set, Dict, Tuple, Optional
+from hypermodel.platform.abstract.platform_config import PlatformConfig
 
 
-class GooglePlatformConfig():
+class GooglePlatformConfig(PlatformConfig):
     gcp_project: str
     gcp_zone: str
 
@@ -19,13 +20,10 @@ class GooglePlatformConfig():
     GCS_CHUNK_SIZE: int
 
     def __init__(self):
-
-        self.data: Dict[str, str] = dict()
-
+        PlatformConfig.__init__(self)
         self.gcp_project = self.get_env("GCP_PROJECT")
         self.gcp_zone = self.get_env("GCP_ZONE")
 
-        print("LAKE_BUCKET is "+self.get_env("LAKE_BUCKET"))
         self.lake_bucket = self.get_env("LAKE_BUCKET")
         self.lake_path = self.get_env("LAKE_PATH")
 
@@ -35,7 +33,7 @@ class GooglePlatformConfig():
         self.k8s_namespace = self.get_env('K8S_NAMESPACE')
         self.k8s_cluster = self.get_env('K8S_CLUSTER')
 
-        self.kfp_artifact_path = self.get_env('KFP_ARTIFACT_PATH', '.')
+        self.kfp_artifact_path = self.get_env('KFP_ARTIFACT_PATH', './artifacts')
 
         self.ci_commit = self.get_env("CI_COMMIT_SHA", "no-commit")
 
@@ -49,8 +47,4 @@ class GooglePlatformConfig():
 
         self.CHUNK_SIZE = 10485760
 
-    def get_env(self, key: str, default=None) -> str:
-        value = os.environ[key] if key in os.environ else default
 
-        self.data[key] = value
-        return value
