@@ -17,7 +17,6 @@ class HmlInferenceApp:
     def __init__(self, name, services, cli, config):
         """
         Create a new `PredictionApp`, listening on the provided port
-
         Args:
             port (int): The port to listen in on (default: 8000)
         """
@@ -45,13 +44,10 @@ class HmlInferenceApp:
         Load the Model (its JobLib and Summary statistics) using an 
         empy ModelContainer object, and bind it to our internal dictionary
         of models.
-
         Args:
             model_container (ModelContainer): The container wrapping the model
-
         Returns:
             The model container passed in, having been loaded.
-
         """
         self.models[model_container.name] = model_container
         return model_container
@@ -60,10 +56,8 @@ class HmlInferenceApp:
         """
         Get a reference to a model with the given name, retuning None
         if it cannot be found.
-
         Args:
             name (str): The name of the model
-
         Returns:
             The ModelContainer object of the model if it can be found,
             or None if it cannot be found.
@@ -80,11 +74,11 @@ class HmlInferenceApp:
         pass
 
     @click.pass_context
-    def start_dev(self):
+    def start_dev(a,b):
         """
         Start the Flask App in development mode
         """
-
+        logging.info(f"The Params are {type(a)}   and    {type(b)}")
         logging.info(f"Development API Starting up on {self.port}")
         self.flask.run(host="127.0.0.1", port=self.port)
 

@@ -5,8 +5,10 @@ from typing import Dict, List
 from xgboost import XGBClassifier
 from hypermodel import hml
 from hypermodel.features import one_hot_encode
-from crashed.crashed_shared import BQ_TABLE_TRAINING, BQ_TABLE_TEST, MODEL_NAME
-from crashed.crashed_shared import build_feature_matrix
+from hypermodel.hml.model_container import ModelContainer
+#from titanic.tragic_titanic_config import titanic_model_container, build_feature_matrix
+
+
 
 from titanic.pipeline.tragic_titanic_training_pipeline import (
     FEATURE_COLUMNS,
@@ -46,8 +48,8 @@ def create_test(ctx):
 def train_model(ctx):
     logging.info(f"Entering training:train_model")
     services: LocalServices = ctx.obj["services"]
-    model_container: ModelContainer = ctx.obj["container"]
-
+    model_container=get_model_container(ctx)
+    app: HmlApp = ctx.obj["app"]
     # training_df = services.warehouse.dataframe_from_table(
     #     services.config.warehouse_dataset, BQ_TABLE_TRAINING
     # )

@@ -33,3 +33,7 @@ class LocalConfig(PlatformConfig):
         self.temp_path = self.get_env("TEMP_PATH", "/tmp")
 
         self.default_sql_lite_db_file = f"{self.warehouse_location}/default.db"
+
+    def __str__(self) -> str:
+        return "LocalConfig(PlatformConfig)"
+        

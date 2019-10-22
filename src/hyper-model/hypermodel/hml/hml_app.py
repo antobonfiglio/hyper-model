@@ -7,6 +7,7 @@ from hypermodel.hml.hml_inference_app import HmlInferenceApp
 from hypermodel.hml.model_container import ModelContainer
 
 from hypermodel.platform.gcp.services import GooglePlatformServices
+from hypermodel.platform.local.services import LocalServices
 
 
 # This is the default `click` entrypoint for kicking off the command line
@@ -27,12 +28,14 @@ class HmlApp():
 
     @click.group()
     @click.pass_context
-    def cli_root(context):
+    def cli_root(self):
         pass
 
     def get_services(self, platform):
         if platform == "GCP":
             return GooglePlatformServices()
+        elif platform == "Local":
+            return LocalServices()
 
     def start(self):
         context = {
@@ -42,3 +45,4 @@ class HmlApp():
         }
         print(f"HmlApp.start()")
         self.cli_root(obj=context, auto_envvar_prefix="HML")
+        logging.info("Executed cli_root")
