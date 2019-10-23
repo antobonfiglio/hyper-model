@@ -1,0 +1,6 @@
+[TESTING_THE_TEST_FILE]
+TEST_ENTRY=1
+
+
+[FLAT_FILE_LOCATION]
+DUMMY_FILE_LOCATION="hypermodel\tests\test_data\dummy_file.txt"
