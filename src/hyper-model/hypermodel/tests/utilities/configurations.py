@@ -5,7 +5,7 @@ import sys, os
 # Append the directory in which this file exists to the
 # path of the configuration file
 
-TEST_CONFIGURATION_FILE=os.path.dirname(os.path.abspath(__file__))+"\\configuration.txt"
+TEST_CONFIGURATION_FILE=os.path.join(os.path.dirname(os.path.abspath(__file__)),"configuration.txt")
 
 
 class TestConfig:
