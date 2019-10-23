@@ -53,8 +53,8 @@ build-docs:
     # Make sure that we install our package first
     - pip install -e ./src/hyper-model
     # Make the documentation
-    - cd src/hyper-model/docs
-    - make html
+    - chmod +x update-docs.sh
+    - ./update-docs.sh
 
 #######################################
 ####  DEPLOY
@@ -75,7 +75,11 @@ demo-crashed-build:
   stage: test-demo-crashed
   script:
     - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD docker.io
+<<<<<<< HEAD
     - docker build -t $DOCKERHUB_DEMOCRASHED:$CI_COMMIT_SHA -f ./demo/car-crashes/crashed.Dockerfile .
+=======
+    - docker build -t $DOCKERHUB_DEMOCRASHED:$CI_COMMIT_SHA -f ./demo/car-crashes/pipeline_op.Dockerfile .
+>>>>>>> origin/master
     - docker push $DOCKERHUB_DEMOCRASHED:$CI_COMMIT_SHA
 
 demo-crashed-deploy:
@@ -95,8 +99,19 @@ demo-crashed-deploy:
     - echo "$KUBEFLOW_CI_SVCACC" > ./kubeflow_ci_svcacc.json
     - gcloud container clusters get-credentials $KFAPP --zone $GCP_ZONE --project $GCP_PROJECT
 
+<<<<<<< HEAD
     # Do the actual deployment to Kubeflow to make sure everything works as expected
     - crashed deploy-pipeline --pipeline-yaml=crashed_pipeline.yml --host $KFP_HOST --client-id $KFP_CLIENT_ID --namespace $KFP_NAMESPACE
+=======
+    # Install HyperModel
+    - pip install -e ./src/hyper-model
+
+    # Install the demo app we are going to deploy
+    - pip install -e ./demo/car-crashes
+
+    # Do the actual deployment to Kubeflow to make sure everything works as expected
+    - crashed pipelines crashed_pipeline deploy-dev --host $KFP_HOST --client-id $KFP_CLIENT_ID --namespace $K8S_NAMESPACE
+>>>>>>> origin/master
 
 ###############################################################
 ###  RELEASE
@@ -105,9 +120,8 @@ push-dockerhub-app:
   stage: release
   dependencies:
     - build-image-hyper-model
-  when: manual
-  # only:
-  #   - release/*
+  only:
+    - release/*
   script:
     # Login to dockerhub
     - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD docker.io
@@ -123,9 +137,8 @@ push-pip:
   stage: release
   dependencies:
     - build-image-hyper-model
-  when: manual
-  # only:
-  #   - release/*
+  only:
+    - release/*
   script:
     # Update HyperModel since we make lots of changes to it
     - pip install -e ./src/hyper-model
@@ -136,7 +149,6 @@ push-pip:
 #######################################
 image-hypermodel-base:
   stage: release
-  when: manual
   only:
     - release/*
   script:
@@ -146,9 +158,8 @@ image-hypermodel-base:
 
 image-hypermodel-cicd-gitlab:
   stage: release
-  when: manual
-  # only:
-  #   - release/*
+  only:
+    - release/*
   script:
     - echo "Building..."
     - docker build -t $IMAGE_DOCKERHUB_HYPERMODEL_CICD:gitlab-$VERSION -f ./infra/docker/hypermodel-cicd-gitlab.Dockerfile ./infra/docker

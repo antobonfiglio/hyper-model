@@ -1,7 +1,11 @@
 import warnings
 import logging
 import sys
+<<<<<<< HEAD
 #sys.path.append('C:\\Amit\\hypermodel\\hyper-model\\src\\hyper-model')
+=======
+sys.path.append('C:\\Amit\\hypermodel\\hyper-model\\src\\hyper-model')
+>>>>>>> origin/master
 
 root = logging.getLogger()
 root.setLevel(logging.INFO)

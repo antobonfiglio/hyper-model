@@ -73,9 +73,15 @@ def build_app(model_container):
 def start_dev(ctx):
     # model_container: ModelContainer = ctx.obj["container"]
     # # Build the application
+<<<<<<< HEAD
     logging.info(f"Entered api_titanic:start_dev")
     app = build_app(model_container)
     app.start_dev(ctx)
+=======
+    # app = build_app(model_container)
+    # app.start_dev()
+    logging.info(f"Entered api_titanic:start_dev")
+>>>>>>> origin/master
 
 
 @api.command()

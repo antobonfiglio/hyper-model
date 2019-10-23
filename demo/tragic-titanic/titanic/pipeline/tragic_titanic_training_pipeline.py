@@ -4,6 +4,8 @@ import os
 import logging
 from hypermodel.platform.local.services import LocalServices
 
+from hypermodel.platform.gcp.services import GooglePlatformServices
+from hypermodel.platform.gcp.gcp_base_op import GcpBaseOp
 from hypermodel.kubeflow.deploy_dev import deploy_to_dev
 from titanic.tragic_titanic_config import NUMERICAL_FEATURES, CATEGORICAL_FEATURES
 
@@ -39,13 +41,13 @@ def build_op(name, command, args):
     ci_commit_hash = os.environ["CI_COMMIT_SHA"]
     container_url = f"{DOCKER_CONTAINER}:{ci_commit_hash}"
 
-    # op = (
-    #     BaseOp(services.config, PIPELINE_NAME, name)
-    #     .with_container(container_url, command, args)
-    #     .bind_gcp_config(services.config)
-    #     .bind_gcp_auth(GCP_AUTH_SECRET)
-    #     .op()
-    # )
+    op = (
+        BaseOp(services.config, PIPELINE_NAME, name)
+        .with_container(container_url, command, args)
+        .bind_gcp_config(services.config)
+        .bind_gcp_auth(GCP_AUTH_SECRET)
+        .op()
+    )
 
     return op
 

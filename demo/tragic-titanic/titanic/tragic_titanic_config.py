@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 import requests
 import os
 import numpy as np
 
 DEFAULT_BASE_FOLDER=os.getcwd()
 DB_LOCATION=os.path.join(DEFAULT_BASE_FOLDER, 'titanic_db.db')
+=======
+DB_LOCATION="C:\\Amit\\hypermodel\\hyper-model\\src\\hyper-model\\hypermodel\\platform\\local\\titanic_db.dat"
+>>>>>>> origin/master
 DB_TABLE="titanic_train_table"
 DB_TRAINING_TABLE="training_table"
 DB_TESTING_TABLE="testing_table"
@@ -15,6 +19,7 @@ NUMERICAL_FEATURES = [
 CATEGORICAL_FEATURES = [
     "Pclass",
     "Sex",
+<<<<<<< HEAD
     "Siblings/Spouses Aboard",
     "Parents/Children Aboard",
 ]
@@ -69,3 +74,12 @@ def get_create_data():
 
 #print(f"the working directory is ********************** {os.getcwd()}")
 get_create_data()
+=======
+    "Siblings-Spouses-Aboard",
+    "Parents-Children-Aboard",
+]
+
+TRAINING_CSV_LOCATION="C:\\Amit\\hypermodel\\hyper-model\\demo\\tragic-titanic\\data\\titanic_train.csv"
+TESTING_CSV_LOCATION="C:\\Amit\\hypermodel\\hyper-model\\demo\\tragic-titanic\\data\\titanic_test.csv"
+
+>>>>>>> origin/master

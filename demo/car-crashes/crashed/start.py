@@ -1,4 +1,5 @@
 import logging
+<<<<<<< HEAD
 import click
 from typing import Dict, List
 from hypermodel import hml
@@ -8,12 +9,24 @@ from crashed.crashed_pipeline import create_training, create_test, train_model
 
 
 def main():
+=======
+from typing import Dict, List
+from hypermodel import hml
+from flask import request
+
+# Import my local modules
+from crashed import shared, pipeline, inference
+
+def main():
+    # Basic configuration and naming of stuff
+>>>>>>> origin/master
     config = {
         "package_name": "crashed",
         "script_name": "crashed",
         "container_url": "growingdata/demo-crashed:tez-test",
         "port": 8000
     }
+<<<<<<< HEAD
 
     # Create a reference here so that we can
     app = hml.HmlApp(name="model_app", platform="GCP", config=config)
@@ -23,6 +36,43 @@ def main():
         Configure our Pipelines Pods with the right secrets and 
         environment variables so that it can work with the cloud
         providers services
+=======
+    # Create a reference to our "App" object which maintains state
+    # about both the Inference and Pipeline phases of the model
+    app = hml.HmlApp(name="model_app", platform="GCP", config=config)
+
+    # Create a reference to our ModelContainer, which tells us about
+    # the features of the model, where its current version lives and
+    # other metadata related to the model.
+    crashed_model = shared.crashed_model_container(app)
+
+    # Tell our application about the model we just built a reference for
+    app.register_model(shared.MODEL_NAME, crashed_model)
+
+    @hml.pipeline(app.pipelines, cron="0 0 * * *", experiment="demos")
+    def crashed_pipeline():
+        """
+        This is where we define the workflow for this pipeline purely
+        with method invocations.
+        """
+        create_training_op = pipeline.create_training()
+        create_test_op = pipeline.create_test()
+        train_model_op = pipeline.train_model()
+
+        # Set up the dependencies for this model
+        (
+            train_model_op
+            .after(create_training_op)
+            .after(create_test_op)
+        )
+
+    @hml.configure_op(app.pipelines)
+    def op_configurator(op: hml.HmlContainerOp):
+        """
+        Configure our Pipeline Operation Pods with the right secrets and 
+        environment variables so that it can work with our cloud
+        provider's services
+>>>>>>> origin/master
         """
         (op
             # Service account for authentication / authorisation
@@ -43,6 +93,7 @@ def main():
         )
         return op
 
+<<<<<<< HEAD
     @hml.pipeline(app=app, cron="0 0 * * *", experiment="demos")
     def crashed_pipeline():
         """
@@ -64,6 +115,25 @@ def main():
 
     app.register_model(crashed_model)
     app.pipelines.configure_op(op_configurator)
+=======
+
+    @hml.inference(app.inference)
+    def crashed_inference(inference_app: hml.HmlInferenceApp):
+        # Get a reference to the current version of my model
+        model_container = inference_app.get_model(shared.MODEL_NAME)
+        model_container.load()
+        
+        # Define our routes here, which can then call other functions with more
+        # context
+        @inference_app.flask.route("/predict", methods=["GET"])
+        def predict():
+            logging.info("api: /predict")
+
+            feature_params = request.args.to_dict()
+            return inference.predict_alcohol(inference_app, model_container, feature_params)
+
+
+>>>>>>> origin/master
     app.start()
 
 

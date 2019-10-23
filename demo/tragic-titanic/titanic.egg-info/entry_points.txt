@@ -1,3 +1,7 @@
 [console_scripts]
+<<<<<<< HEAD
 titanic = titanic.start:main
+=======
+titanic = titanic.__main__:main
+>>>>>>> origin/master
 

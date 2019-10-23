@@ -19,6 +19,15 @@ from hypermodel.platform.abstract.services import PlatformServicesBase
 
 
 class ModelContainer:
+<<<<<<< HEAD:src/hyper-model/hypermodel/hml/model_container.py
+=======
+    """
+    The `ModelContainer` class provides a wrapper for a Machine Learning model,
+    detailing information about Features (numeric & categorical), information about
+    the distributions of feature columns and potentially a reference to the current
+    version of the model's `.joblib` file. 
+    """
+>>>>>>> origin/master:src/hyper-model/hypermodel/hml/model_container.py
     config: PlatformServicesBase
     all_features: List[str]
     features_categorical: List[str]
@@ -48,9 +57,20 @@ class ModelContainer:
         self.filename_model = f"{self.name}.joblib"
         self.filename_reference = f"{self.name}-reference.json"
 
-        # Connectors for cloud platforms
+        self.is_loaded = False
 
     def analyze_distributions(self, data_frame: pd.DataFrame):
+        """
+        Given a dataframe, find all the unique values for categorical features
+        and the distribution of all the numerical features and store them within
+        this object.
+
+        Args:
+            data_frame (pd.DataFrame): The dataframe to analyze
+
+        Returns:
+            A reference to self
+        """
         logging.info(f"ModelContainer {self.name}: analyze_distributions")
 
         self.feature_uniques = get_unique_feature_values(
@@ -61,6 +81,12 @@ class ModelContainer:
         return self
 
     def dump_distributions(self):
+        """
+        Write information about the distributions of features to the local filesystem
+
+        Returns:
+            The path to the file that was written
+        """
         file_path = self.get_local_path(self.filename_distributions)
 
         with open(file_path, "w") as f:
@@ -72,6 +98,16 @@ class ModelContainer:
         return file_path
 
     def build_training_matrix(self, data_frame: pd.DataFrame):
+        """
+        Convert the provided `data_frame` to a matrix after one-hot encoding
+        all the categorical features, using the currently cached `feature_uniques`
+
+        Args:
+            data_frame (pd.DataFrame): The pandas dataframe to encode
+
+        Returns:
+            A numpy array of the encoded data
+        """
         logging.info(f"ModelContainer {self.name}: build_training_matrix")
 
         # Now lets do the encoding thing...
@@ -84,6 +120,18 @@ class ModelContainer:
         return matrix
 
     def load(self, reference_file=None):
+        """
+        Given the provided reference file, look up the location of the model
+        in the DataLake and load it into memory.  This will load the .joblib
+        file, as well as any distributions / unique values associeated with this
+        model reference
+
+        Args:
+            reference_file (str): The path of the reference json file
+
+        Returns:
+            None
+        """
         lake = self.services.lake
 
         if reference_file is None:
@@ -147,8 +195,17 @@ class ModelContainer:
                 "md5": file_md5(local_path_dist),
             },
         }
+
         return reference
 
+<<<<<<< HEAD:src/hyper-model/hypermodel/hml/model_container.py
+=======
+    def dump_reference(self, reference):
+        file_path = self.get_local_path(self.filename_reference)
+        with open(file_path, "w") as f:
+            json.dump(reference, f, indent=2)
+
+>>>>>>> origin/master:src/hyper-model/hypermodel/hml/model_container.py
 
     def create_merge_request(self, reference, description="New models!"):
         self.services.git.create_merge_request(
