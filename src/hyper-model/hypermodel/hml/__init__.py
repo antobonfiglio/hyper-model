@@ -1,12 +1,9 @@
-<<<<<<< HEAD
-=======
 """
 Core HyperModel Classes & Decorators
 
 A collection of the core Hyper Model SDK objects to be used in defining Hyper Model 
 applications
 """
->>>>>>> origin/master
 import click
 
 
@@ -19,8 +16,4 @@ from hypermodel.hml.hml_pipeline import HmlPipeline
 
 from hypermodel.hml.model_container import ModelContainer
 
-<<<<<<< HEAD
-from hypermodel.hml.decorators import op, option, pipeline, pass_context
-=======
 from hypermodel.hml.decorators import op, option, pipeline, configure_op, pass_context, inference
->>>>>>> origin/master

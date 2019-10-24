@@ -8,11 +8,7 @@ import os
 # from hypermodel.platform.gcp.services import GooglePlatformServices
 from hypermodel.platform.local.services import LocalServices
 
-<<<<<<< HEAD
 from titanic.tragic_titanic_config import services , titanic_model_container
-=======
-from titanic.model_config import services , titanic_model_container
->>>>>>> origin/master
 from titanic.pipeline.ops.transform import transform
 from titanic.pipeline.ops.training import training
 from titanic.pipeline.ops.testing import testing

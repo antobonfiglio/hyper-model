@@ -57,10 +57,6 @@ def crashed_model_container(app:  hml.HmlApp):
     return model_container
 
 
-<<<<<<< HEAD:demo/car-crashes/crashed/crashed_shared.py
-=======
-
->>>>>>> origin/master:demo/car-crashes/crashed/shared.py
 def build_feature_matrix(model_container, data_frame: pd.DataFrame, throw_on_missing=False):
     """
         Given an input dataframe, encode the categorical features (one-hot)

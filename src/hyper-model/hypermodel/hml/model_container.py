@@ -19,15 +19,12 @@ from hypermodel.platform.abstract.services import PlatformServicesBase
 
 
 class ModelContainer:
-<<<<<<< HEAD:src/hyper-model/hypermodel/hml/model_container.py
-=======
     """
     The `ModelContainer` class provides a wrapper for a Machine Learning model,
     detailing information about Features (numeric & categorical), information about
     the distributions of feature columns and potentially a reference to the current
     version of the model's `.joblib` file. 
     """
->>>>>>> origin/master:src/hyper-model/hypermodel/hml/model_container.py
     config: PlatformServicesBase
     all_features: List[str]
     features_categorical: List[str]
@@ -198,14 +195,11 @@ class ModelContainer:
 
         return reference
 
-<<<<<<< HEAD:src/hyper-model/hypermodel/hml/model_container.py
-=======
     def dump_reference(self, reference):
         file_path = self.get_local_path(self.filename_reference)
         with open(file_path, "w") as f:
             json.dump(reference, f, indent=2)
 
->>>>>>> origin/master:src/hyper-model/hypermodel/hml/model_container.py
 
     def create_merge_request(self, reference, description="New models!"):
         self.services.git.create_merge_request(

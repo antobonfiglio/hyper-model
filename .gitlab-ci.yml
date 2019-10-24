@@ -75,11 +75,7 @@ demo-crashed-build:
   stage: test-demo-crashed
   script:
     - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD docker.io
-<<<<<<< HEAD
-    - docker build -t $DOCKERHUB_DEMOCRASHED:$CI_COMMIT_SHA -f ./demo/car-crashes/crashed.Dockerfile .
-=======
     - docker build -t $DOCKERHUB_DEMOCRASHED:$CI_COMMIT_SHA -f ./demo/car-crashes/pipeline_op.Dockerfile .
->>>>>>> origin/master
     - docker push $DOCKERHUB_DEMOCRASHED:$CI_COMMIT_SHA
 
 demo-crashed-deploy:
@@ -99,10 +95,6 @@ demo-crashed-deploy:
     - echo "$KUBEFLOW_CI_SVCACC" > ./kubeflow_ci_svcacc.json
     - gcloud container clusters get-credentials $KFAPP --zone $GCP_ZONE --project $GCP_PROJECT
 
-<<<<<<< HEAD
-    # Do the actual deployment to Kubeflow to make sure everything works as expected
-    - crashed deploy-pipeline --pipeline-yaml=crashed_pipeline.yml --host $KFP_HOST --client-id $KFP_CLIENT_ID --namespace $KFP_NAMESPACE
-=======
     # Install HyperModel
     - pip install -e ./src/hyper-model
 
@@ -111,7 +103,6 @@ demo-crashed-deploy:
 
     # Do the actual deployment to Kubeflow to make sure everything works as expected
     - crashed pipelines crashed_pipeline deploy-dev --host $KFP_HOST --client-id $KFP_CLIENT_ID --namespace $K8S_NAMESPACE
->>>>>>> origin/master
 
 ###############################################################
 ###  RELEASE

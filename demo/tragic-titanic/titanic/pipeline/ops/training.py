@@ -25,7 +25,6 @@ from hypermodel.ml.features.categorical import (
 )
 # from crashed.model_config import crashed_model_container, build_feature_matrix
 # from crashed.model_config import BQ_TABLE_TRAINING, BQ_TABLE_TEST
-<<<<<<< HEAD
 from titanic.tragic_titanic_config import (
     DB_LOCATION,
     DB_TABLE,
@@ -33,8 +32,6 @@ from titanic.tragic_titanic_config import (
     DB_TESTING_TABLE,
     TRAINING_CSV_LOCATION,
     TESTING_CSV_LOCATION)
-=======
->>>>>>> origin/master
 
 
 @click.group()
@@ -55,7 +52,6 @@ def train_model(ctx):
     #     services.config.warehouse_dataset, BQ_TABLE_TRAINING
     # )
     # training_df.to_csv("/mnt/c/data/crashed/training.csv")
-<<<<<<< HEAD
     training_df = pd.read_csv(TRAINING_CSV_LOCATION)
     logging.info("Got Training DataFrame!")
 
@@ -64,21 +60,11 @@ def train_model(ctx):
     # test_df.columns = [col.strip() if col.strip()!='Parents-Children-Aboard' else 'Parents/Children Aboard' for col in test_df.columns]
     # logging.info(f"The columns of the data frame are {test_df.columns}")
     # logging.info(f"The data frame is ** {test_df.head()}")
-=======
-    training_df = pd.read_csv("C:\\Amit\\hypermodel\\hyper-model\\demo\\tragic-titanic\\data\\titanic_train.csv")
-    logging.info("Got Training DataFrame!")
-
-    test_df = pd.read_csv("C:\\Amit\\hypermodel\\hyper-model\\demo\\tragic-titanic\\data\\titanic_test.csv")
->>>>>>> origin/master
 #    test_df = services.warehouse.dataframe_from_table(
 #         services.config.warehouse_dataset, BQ_TABLE_TEST
 #     )
     # test_df.to_csv("/mnt/c/data/crashed/test.csv")
     # test_df = pd.read_csv("/mnt/c/data/crashed/test.csv")
-<<<<<<< HEAD
-=======
-    logging.info("Got Test DataFrame!")
->>>>>>> origin/master
 
     # Find all our unique values for categorical features and
     # distribution information for other features
@@ -103,10 +89,6 @@ def train_model(ctx):
 
 def train(model_container, data_frame):
     logging.info(f"Entering training:train")
-<<<<<<< HEAD
-=======
-    logging.info(f"training: {model_container.name}: train")
->>>>>>> origin/master
     feature_matrix = build_feature_matrix(model_container, data_frame)
     targets = data_frame[model_container.target]
 
@@ -134,10 +116,6 @@ def train(model_container, data_frame):
 
 def evaluate_model(model_container, data_frame):
     logging.info(f"Entering training:evaluate_model")
-<<<<<<< HEAD
-=======
-    logging.info(f"training: {model_container.name}: evaluate_model")
->>>>>>> origin/master
 
     test_feature_matrix = build_feature_matrix(model_container, data_frame)
     test_targets = data_frame[model_container.target]

@@ -7,10 +7,6 @@ from hypermodel.hml.hml_inference_app import HmlInferenceApp
 from hypermodel.hml.model_container import ModelContainer
 
 from hypermodel.platform.gcp.services import GooglePlatformServices
-<<<<<<< HEAD
-from hypermodel.platform.local.services import LocalServices
-=======
->>>>>>> origin/master
 
 
 # This is the default `click` entrypoint for kicking off the command line
@@ -26,14 +22,6 @@ class HmlApp():
         self.inference = HmlInferenceApp(name, self.services, self.cli_root, config)
         self.models: Dict[str, ModelContainer] = dict()
 
-<<<<<<< HEAD
-    def register_model(self, model_container: ModelContainer):
-        self.models[model_container.name] = model_container
-
-    @click.group()
-    @click.pass_context
-    def cli_root(self):
-=======
     def register_model(self, name: str, model_container: ModelContainer):
         self.models[model_container.name] = model_container
         self.inference.register_model(model_container)
@@ -44,17 +32,11 @@ class HmlApp():
     @click.group()
     @click.pass_context
     def cli_root(context):
->>>>>>> origin/master
         pass
 
     def get_services(self, platform):
         if platform == "GCP":
             return GooglePlatformServices()
-<<<<<<< HEAD
-        elif platform == "Local":
-            return LocalServices()
-=======
->>>>>>> origin/master
 
     def start(self):
         context = {
@@ -64,7 +46,3 @@ class HmlApp():
         }
         print(f"HmlApp.start()")
         self.cli_root(obj=context, auto_envvar_prefix="HML")
-<<<<<<< HEAD
-        logging.info("Executed cli_root")
-=======
->>>>>>> origin/master

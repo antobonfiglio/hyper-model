@@ -30,11 +30,7 @@ class HmlInferenceApp:
         # Bind my health related endpoints
         bind_health_routes(self.flask)
 
-<<<<<<< HEAD:src/hyper-model/hypermodel/hml/hml_inference_app.py
-        # Bidn my cli commands for inference
-=======
         # Bind my cli commands for inference
->>>>>>> origin/master:src/hyper-model/hypermodel/hml/hml_inference_app.py
         self.cli_root = cli
         self.cli_root.add_command(self.cli_inference_group)
 
@@ -44,23 +40,15 @@ class HmlInferenceApp:
         self.cli_start_prod = click.command()(self.start_prod)
         self.cli_inference_group.add_command(self.cli_start_prod)
 
-<<<<<<< HEAD:src/hyper-model/hypermodel/hml/hml_inference_app.py
-    def load_model(self, model_container):
-=======
         self.config_callbacks = []
 
     def register_model(self, model_container):
->>>>>>> origin/master:src/hyper-model/hypermodel/hml/hml_inference_app.py
         """
         Load the Model (its JobLib and Summary statistics) using an 
         empy ModelContainer object, and bind it to our internal dictionary
         of models.
         Args:
             model_container (ModelContainer): The container wrapping the model
-<<<<<<< HEAD:src/hyper-model/hypermodel/hml/hml_inference_app.py
-=======
-
->>>>>>> origin/master:src/hyper-model/hypermodel/hml/hml_inference_app.py
         Returns:
             The model container passed in, having been loaded.
         """
@@ -98,18 +86,6 @@ class HmlInferenceApp:
     def cli_inference_group(context):
         pass
 
-<<<<<<< HEAD:src/hyper-model/hypermodel/hml/hml_inference_app.py
-    @click.pass_context
-    def start_dev(a,b):
-        """
-        Start the Flask App in development mode
-        """
-        logging.info(f"The Params are {type(a)}   and    {type(b)}")
-        logging.info(f"Development API Starting up on {self.port}")
-        self.flask.run(host="127.0.0.1", port=self.port)
-
-    @click.pass_context
-=======
     # @click.pass_context
     def start_dev(self):
         """
@@ -122,7 +98,6 @@ class HmlInferenceApp:
         self.flask.run(host="127.0.0.1", port=self.port)
 
     # @click.pass_context
->>>>>>> origin/master:src/hyper-model/hypermodel/hml/hml_inference_app.py
     def start_prod(self):
         """
         Start the Flask App in Production mode (via Waitress)
